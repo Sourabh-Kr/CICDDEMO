@@ -16,7 +16,7 @@
 #           echo Add other actions to build,
 #           echo test, and deploy your project.
 
-name: CI
+name: CI JOB
 
 on:
   pull_request:
@@ -24,12 +24,12 @@ on:
 
 jobs:
   test:
-    name: Running Units Test
+    name: CI
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Master
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Set Up Node
         uses: actions/setup-node@v1
         with:
