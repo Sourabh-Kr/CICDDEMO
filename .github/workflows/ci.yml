@@ -28,9 +28,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Checkout Master
+        uses: actions/checkout@v1
+      - name: Set Up Node
+        uses: actions/setup-node@v1
         with:
           node-version: 14
+      - name: install dependencies
+        run: npm ci
       - name: run test
         run: npm test
+      - name: run Build
+        run: npm run build
