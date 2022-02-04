@@ -1,0 +1,73 @@
+# name: CI
+
+# on: [push]
+
+# jobs:
+#   test:
+#     name: Running Units Test
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v1
+#       - name: Run a one-line script
+#         run: echo Hello, world!
+#       - name: Run a multi-line script
+#         run: |
+#           echo Add other actions to build,
+#           echo test, and deploy your project.
+
+# name: CI JOB
+
+# on:
+#   pull_request:
+#     branches: [master]
+
+# jobs:
+#   test:
+#     name: CI
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout Master
+#         uses: actions/checkout@v2
+#       - name: Set Up Node
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 14
+#       - name: install dependencies
+#         run: npm ci
+#       - name: run test
+#         run: npm test
+#       - name: run Build
+#         run: npm run build
+
+# Whenever we push any changes or merge a pull request to the develop branch
+name: Development workflow
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Development Code
+        uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: install dependencies
+        run: npm ci
+      - name: run Build
+        run: npm run build
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12 #This is the Heroku Deploy Action
+        with:
+          args: deploy --dir=build --prod
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "github-actions-herokudevelop"
+          heroku_email: "sourabh.kr001@gmail.com"
