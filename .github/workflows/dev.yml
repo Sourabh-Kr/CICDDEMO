@@ -36,21 +36,22 @@
 #           node-version: 14
 #       - name: install dependencies
 #         run: npm ci
-#       - name: run test
-#         run: npm test
+# - name: run test
+#   run: npm test
 #       - name: run Build
 #         run: npm run build
 
-# Whenever we push any changes or merge a pull request to the develop branch
+#------------------------------------------------------------------------------------
+# Whenever we create pull request to the develop branch
 name: Development workflow
 
 on:
-  push:
+  pull_request:
     branches:
       - develop
 
 jobs:
-  deploy:
+  Dev-Deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -62,6 +63,8 @@ jobs:
           node-version: 14.x
       - name: install dependencies
         run: npm ci
+      - name: run test
+        run: npm test
       - name: run Build
         run: npm run build
       - name: Deploy to Heroku
